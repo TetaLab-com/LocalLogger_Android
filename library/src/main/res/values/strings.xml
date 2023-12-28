@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">LogCollector</string>
+    <string name="logTitle">Application Logs</string>
+</resources>

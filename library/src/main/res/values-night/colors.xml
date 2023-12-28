@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="content_background">#13140F</color>
+    <color name="title_background">#323036</color>
+    <color name="title_text">#FFFFFF</color>
+    <color name="search_background">#323036</color>
+    <color name="row_odd">#323036</color>
+    <color name="row_pair">#222227</color>
+</resources>
