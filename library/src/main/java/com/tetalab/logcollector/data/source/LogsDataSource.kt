@@ -82,8 +82,8 @@ class LogsDataSource {
         }
 
         val logsFlow: SharedFlow<List<Log>> = _myLogs
-        var searchQuery = ""
-        var filterLevel = ""
+        private var searchQuery = ""
+        private var filterLevel = ""
 
 
         fun getFilteredLogs(): List<Log> {

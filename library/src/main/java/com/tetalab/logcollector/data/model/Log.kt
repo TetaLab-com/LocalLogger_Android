@@ -11,13 +11,12 @@ data class Log(
     fun getUserMessage(): String {
         return if (className.isNotEmpty()) {
             if (methodName.isNotEmpty())
-                return "[${className}] [${methodName}] ${message}"
+                "[${className}] [${methodName}] ${message}"
             else
-
-                return "[${className}] ${message}"
+                "[${className}] ${message}"
         } else {
             if (methodName.isNotEmpty())
-                return "[${methodName}] ${message}"
+                "[${methodName}] ${message}"
             else
                 message
         }

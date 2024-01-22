@@ -32,7 +32,7 @@ class LogsAdapter(private val localDataSet: MutableList<Log>) : RecyclerView.Ada
         var log = localDataSet[position]
         viewHolder.dateView.text = log.dateTime
         viewHolder.textView.text = "${log.level.getLevelPrefix()}${log.getUserMessage()}"
-        viewHolder.textView.setTextColor(log.level.color)
+        viewHolder.textView.setTextColor(log.level.getColor())
 
         if (position % 2 == 0) {
             viewHolder.root.setBackgroundColor(viewHolder.root.resources.getColor(R.color.row_pair))
