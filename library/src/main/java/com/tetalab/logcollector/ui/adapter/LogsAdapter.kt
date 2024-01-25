@@ -1,4 +1,4 @@
-package com.tetalab.logcollector.ui
+package com.tetalab.logcollector.ui.adapter
 
 import android.view.LayoutInflater
 
@@ -10,7 +10,6 @@ import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView
 import com.tetalab.logcollector.R
-import com.tetalab.logcollector.data.model.Level
 import com.tetalab.logcollector.data.model.Log
 
 class LogsAdapter(private val localDataSet: MutableList<Log>) : RecyclerView.Adapter<LogsAdapter.ViewHolder>() {

@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/showLogsBtn"
+        android:id="@+id/showLogsDialogBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -25,5 +25,15 @@
         app:layout_constraintStart_toStartOf="@+id/messageTitle"
         app:layout_constraintEnd_toEndOf="@+id/messageTitle"
         app:layout_constraintTop_toBottomOf="@+id/messageTitle" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/showLogsActivityBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Show Logs Activity"
+        app:layout_constraintStart_toStartOf="@+id/messageTitle"
+        app:layout_constraintEnd_toEndOf="@+id/messageTitle"
+        app:layout_constraintTop_toBottomOf="@+id/showLogsDialogBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

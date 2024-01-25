@@ -1,16 +1,19 @@
 package com.tetalab.logcollector.sample
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.tetalab.logcollector.LogsActivity
 import com.tetalab.logcollector.data.source.LogsDataSource
-import com.tetalab.logcollector.ui.LogFragment
+import com.tetalab.logcollector.ui.dialog.LogDialogFragment
 
 class SampleActivity : AppCompatActivity() {
 
-    private lateinit var showLogsBtn: Button
+    private lateinit var showLogsDialogBtn: Button
+    private lateinit var showLogsActivityBtn: Button
     private lateinit var handler: Handler
 
     private var messageNumber = 1
@@ -26,12 +29,17 @@ class SampleActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        showLogsBtn = findViewById(R.id.showLogsBtn)
+        showLogsDialogBtn = findViewById(R.id.showLogsDialogBtn)
+        showLogsActivityBtn = findViewById(R.id.showLogsActivityBtn)
     }
 
     private fun initListener() {
-        showLogsBtn.setOnClickListener {
-            showLogsFragment()
+        showLogsDialogBtn.setOnClickListener {
+            showLogsDialog()
+        }
+
+        showLogsActivityBtn.setOnClickListener {
+            showLogsActivity()
         }
     }
 
@@ -40,9 +48,13 @@ class SampleActivity : AppCompatActivity() {
         sendTestMessages()
     }
 
-    private fun showLogsFragment() {
-        LogFragment().show(
-            supportFragmentManager, LogFragment.TAG)
+    private fun showLogsActivity() {
+        startActivity(Intent(this, LogsActivity::class.java))
+    }
+
+    private fun showLogsDialog() {
+        LogDialogFragment().show(
+            supportFragmentManager, LogDialogFragment.TAG)
     }
 
     private fun sendTestMessages() {
