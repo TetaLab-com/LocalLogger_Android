@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tetalab.logcollector.data.model.Level
 import com.tetalab.logcollector.data.source.LogsDataSource
-import com.tetalab.logcollector.ui.LogsAdapter
+import com.tetalab.logcollector.ui.adapter.LogsAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ import kotlinx.coroutines.withContext
 /**
  * Todo generalize Activity and Fragment logic
  */
-open class LogActivity : AppCompatActivity() {
+open class JustLogActivity : AppCompatActivity() {
 
     private lateinit var logsRecyclerView: RecyclerView
     private lateinit var searchView: SearchView
@@ -43,7 +43,7 @@ open class LogActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        Log.d("LogActivity", "initView")
+        Log.d("JustLogActivity", "initView")
         logsRecyclerView = findViewById(R.id.logsRecyclerView)
         searchView = findViewById(R.id.searchFilter)
         levelView = findViewById(R.id.filterLevel)
@@ -69,7 +69,7 @@ open class LogActivity : AppCompatActivity() {
     }
 
     private fun initListener() {
-        Log.d("LogActivity", "initListener")
+        Log.d("JustLogActivity", "initListener")
         searchView.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query.isNullOrEmpty()) {
@@ -135,7 +135,7 @@ open class LogActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.d("LogActivity", "onStart")
+        Log.d("JustLogActivity", "onStart")
         locationUpdatesJob = lifecycleScope.launch {
             LogsDataSource.logsFlow.collect {
                 withContext(Dispatchers.Main) {
@@ -146,7 +146,7 @@ open class LogActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        Log.d("LogActivity", "onStop")
+        Log.d("JustLogActivity", "onStop")
         // Stop collecting when the View goes to the background
         locationUpdatesJob?.cancel()
         super.onStop()
