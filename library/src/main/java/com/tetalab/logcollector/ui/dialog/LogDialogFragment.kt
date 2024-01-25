@@ -1,16 +1,18 @@
-package com.tetalab.logcollector.ui
+package com.tetalab.logcollector.ui.dialog
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +25,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LogFragment : Fragment() {
+
+class LogDialogFragment : DialogFragment() {
 
     private lateinit var root: View
     private lateinit var logsRecyclerView: RecyclerView
@@ -40,6 +43,12 @@ class LogFragment : Fragment() {
     ): View {
         root = inflater.inflate(R.layout.fragment_just_logs, container, false)
         return root
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        return dialog
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -149,6 +158,13 @@ class LogFragment : Fragment() {
                 }
             }
         }
+
+        val dialog = dialog
+        if (dialog != null) {
+            val width = ViewGroup.LayoutParams.MATCH_PARENT
+            val height = ViewGroup.LayoutParams.MATCH_PARENT
+            dialog.window!!.setLayout(width, height)
+        }
     }
 
     override fun onStop() {
@@ -159,6 +175,6 @@ class LogFragment : Fragment() {
     }
 
     companion object {
-        val TAG: String = LogFragment::class.java.name
+        val TAG: String = LogDialogFragment::class.java.name
     }
 }
