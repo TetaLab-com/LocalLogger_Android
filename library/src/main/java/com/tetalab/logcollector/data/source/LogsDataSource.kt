@@ -1,7 +1,7 @@
 package com.tetalab.logcollector.data.source
 
 import com.tetalab.logcollector.data.model.Level
-import com.tetalab.logcollector.data.model.Log
+import com.tetalab.logcollector.data.model.AppLog
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import java.text.SimpleDateFormat
@@ -14,17 +14,17 @@ import java.util.Date
 class LogsDataSource {
 
     companion object {
-        private val logs = Collections.synchronizedList(mutableListOf<Log>())
+        private val logs = Collections.synchronizedList(mutableListOf<AppLog>())
         private var formatter: SimpleDateFormat = SimpleDateFormat("HH:mm:ssSSSS")
 
-        private fun addLog(log: Log) {
+        private fun addLog(log: AppLog) {
             logs.add(log)
-            android.util.Log.d("Log", "[${log.className}] [${log.methodName}] ${log.message}")
+            android.util.Log.d("AppLog", "[${log.className}] [${log.methodName}] ${log.message}")
             notifyListUpdates()
         }
 
         fun w(className: String, methodName: String, message: String) {
-            addLog(Log(getTimeString(), message, Level.WARNING, className, methodName))
+            addLog(AppLog(getTimeString(), message, Level.WARNING, className, methodName))
         }
 
         fun w(message: String) {
@@ -32,7 +32,7 @@ class LogsDataSource {
         }
 
         fun i(className: String, methodName: String, message: String) {
-            addLog(Log(getTimeString(), message, Level.INFO, className, methodName))
+            addLog(AppLog(getTimeString(), message, Level.INFO, className, methodName))
         }
 
         fun i(message: String) {
@@ -40,7 +40,7 @@ class LogsDataSource {
         }
 
         fun e(className: String, methodName: String, message: String) {
-            addLog(Log(getTimeString(), message, Level.ERROR, className, methodName))
+            addLog(AppLog(getTimeString(), message, Level.ERROR, className, methodName))
         }
 
         fun e(message: String) {
@@ -48,7 +48,7 @@ class LogsDataSource {
         }
 
         fun inMessage(className: String, methodName: String, message: String) {
-            addLog(Log(getTimeString(), message, Level.IN_MESSAGE, className, methodName))
+            addLog(AppLog(getTimeString(), message, Level.IN_MESSAGE, className, methodName))
         }
 
         fun inMessage(message: String) {
@@ -56,7 +56,7 @@ class LogsDataSource {
         }
 
         fun outMessage(className: String, methodName: String, message: String) {
-            addLog(Log(getTimeString(), message, Level.OUT_MESSAGE, className, methodName))
+            addLog(AppLog(getTimeString(), message, Level.OUT_MESSAGE, className, methodName))
         }
 
         fun outMessage(message: String) {
@@ -67,26 +67,26 @@ class LogsDataSource {
             return formatter.format(Date())
         }
 
-        fun getLogs(): List<Log> {
+        fun getLogs(): List<AppLog> {
             return logs
         }
 
         //Reactive part
         private const val BUFFER_LENGTH = 100
 
-        private val _myLogs = MutableSharedFlow<List<Log>>(replay = 1, extraBufferCapacity = 64)
+        private val _myLogs = MutableSharedFlow<List<AppLog>>(replay = 1, extraBufferCapacity = 64)
 
         init {
             val logs = getLogs()
             _myLogs.tryEmit(logs)
         }
 
-        val logsFlow: SharedFlow<List<Log>> = _myLogs
+        val logsFlow: SharedFlow<List<AppLog>> = _myLogs
         private var searchQuery = ""
         private var filterLevel = ""
 
 
-        fun getFilteredLogs(): List<Log> {
+        fun getFilteredLogs(): List<AppLog> {
             val filteredLogs = if (searchQuery.isNotEmpty())
                 logs.filter { it.getUserMessage().toLowerCase().contains(searchQuery.toLowerCase()) }
                     .filter { it.level.getLevelPrefix().contains(filterLevel) }

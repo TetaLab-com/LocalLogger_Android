@@ -7,6 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 import com.tetalab.logcollector.ui.AboutFragment
 import com.tetalab.logcollector.ui.HistoryFragment
 import com.tetalab.logcollector.ui.LogFragment
@@ -35,7 +36,7 @@ class LogsActivity : AppCompatActivity() {
     }
 
     private fun initListener() {
-        bottomNavView.setOnNavigationItemSelectedListener(navListener)
+        bottomNavView.setOnItemSelectedListener(navListener)
     }
 
     private fun showLogsFragment() {
@@ -46,7 +47,7 @@ class LogsActivity : AppCompatActivity() {
     }
 
     private val navListener =
-        BottomNavigationView.OnNavigationItemSelectedListener { item: MenuItem ->
+        NavigationBarView.OnItemSelectedListener { item: MenuItem ->
             // By using switch we can easily get
             // the selected fragment
             // by using there id.

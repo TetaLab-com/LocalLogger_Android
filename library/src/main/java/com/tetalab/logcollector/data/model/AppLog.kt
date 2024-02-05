@@ -1,6 +1,6 @@
 package com.tetalab.logcollector.data.model
 
-data class Log(
+data class AppLog(
     val dateTime: String,
     val message: String,
     val level: Level = Level.WARNING,
@@ -11,12 +11,12 @@ data class Log(
     fun getUserMessage(): String {
         return if (className.isNotEmpty()) {
             if (methodName.isNotEmpty())
-                "[${className}] [${methodName}] ${message}"
+                "[${className}] [${methodName}] $message"
             else
-                "[${className}] ${message}"
+                "[${className}] $message"
         } else {
             if (methodName.isNotEmpty())
-                "[${methodName}] ${message}"
+                "[${methodName}] $message"
             else
                 message
         }
