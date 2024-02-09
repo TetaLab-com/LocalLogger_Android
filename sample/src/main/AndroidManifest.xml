@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.tetalab.logcollector.LogsActivity"
+        <activity android:name="com.tetalab.logcollector.ui.LogsActivity"
             android:exported="true">
 
         </activity>

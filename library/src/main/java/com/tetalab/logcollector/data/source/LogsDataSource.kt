@@ -1,7 +1,11 @@
 package com.tetalab.logcollector.data.source
 
+import com.tetalab.logcollector.coroutine.ioTask
 import com.tetalab.logcollector.data.model.Level
 import com.tetalab.logcollector.data.model.AppLog
+import com.tetalab.logcollector.data.model.Session
+import com.tetalab.logcollector.data.room.AppLogDAO
+import com.tetalab.logcollector.data.room.LogDatabase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import java.text.SimpleDateFormat
@@ -14,57 +18,63 @@ import java.util.Date
 class LogsDataSource {
 
     companion object {
+        private lateinit var session: Session
         private val logs = Collections.synchronizedList(mutableListOf<AppLog>())
         private var formatter: SimpleDateFormat = SimpleDateFormat("HH:mm:ssSSSS")
 
-        fun init() {
+        private lateinit var dao: AppLogDAO
 
+        fun init() {
+            dao = LogDatabase.getInstance().appLogDao()
         }
 
-        //todo save logs in DB here
-        private fun addLog(log: AppLog) {
+        private suspend fun addLog(log: AppLog) {
+            log.sessionId = session.uid
             logs.add(log)
             android.util.Log.d("AppLog", "[${log.className}] [${log.methodName}] ${log.message}")
+            ioTask {
+                dao.insertAll(log)
+            }
             notifyListUpdates()
         }
 
-        fun w(className: String, methodName: String, message: String) {
+        suspend fun w(className: String, methodName: String, message: String) {
             addLog(AppLog(getTimeString(), message, Level.WARNING, className, methodName))
         }
 
-        fun w(message: String) {
+        suspend fun w(message: String) {
             w("", "", message)
         }
 
-        fun i(className: String, methodName: String, message: String) {
+        suspend fun i(className: String, methodName: String, message: String) {
             addLog(AppLog(getTimeString(), message, Level.INFO, className, methodName))
         }
 
-        fun i(message: String) {
+        suspend fun i(message: String) {
             i("", "", message)
         }
 
-        fun e(className: String, methodName: String, message: String) {
+        suspend fun e(className: String, methodName: String, message: String) {
             addLog(AppLog(getTimeString(), message, Level.ERROR, className, methodName))
         }
 
-        fun e(message: String) {
+        suspend fun e(message: String) {
             e("", "", message)
         }
 
-        fun inMessage(className: String, methodName: String, message: String) {
+        suspend fun inMessage(className: String, methodName: String, message: String) {
             addLog(AppLog(getTimeString(), message, Level.IN_MESSAGE, className, methodName))
         }
 
-        fun inMessage(message: String) {
+        suspend fun inMessage(message: String) {
             inMessage("", "", message)
         }
 
-        fun outMessage(className: String, methodName: String, message: String) {
+        suspend fun outMessage(className: String, methodName: String, message: String) {
             addLog(AppLog(getTimeString(), message, Level.OUT_MESSAGE, className, methodName))
         }
 
-        fun outMessage(message: String) {
+        suspend fun outMessage(message: String) {
             outMessage("", "", message)
         }
 
@@ -126,6 +136,10 @@ class LogsDataSource {
         fun filterLevel(level: Level) {
             filterLevel = level.getLevelPrefix()
             notifyListUpdates()
+        }
+
+        fun setCurrentSession(session: Session) {
+            this.session = session
         }
     }
 }

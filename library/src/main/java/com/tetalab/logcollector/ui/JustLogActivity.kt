@@ -1,9 +1,10 @@
-package com.tetalab.logcollector
+package com.tetalab.logcollector.ui
 
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import com.tetalab.logcollector.R
 import com.tetalab.logcollector.ui.log.LogFragment
 
 /**

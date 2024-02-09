@@ -1,30 +1,45 @@
 package com.tetalab.logcollector.data.source
 
 import com.tetalab.logcollector.data.model.Session
+import com.tetalab.logcollector.data.room.AppLogDAO
+import com.tetalab.logcollector.data.room.LogDatabase
+import com.tetalab.logcollector.data.room.SessionDAO
+import java.text.SimpleDateFormat
 import java.util.Collections
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 class SessionDataSource {
 
     companion object {
         private val sessions = Collections.synchronizedList(mutableListOf<Session>())
 
-        fun init() {
+        private lateinit var dao: SessionDAO
 
+        fun init() {
+            dao = LogDatabase.getInstance().sessionDao()
         }
 
-        private fun addSession(session: Session) {
+
+        private suspend fun addSession(session: Session) {
             sessions.add(session)
         }
 
-        fun getSessions(): List<Session> {
+        suspend fun getSessions(): List<Session> {
             return sessions
         }
 
-        init {
-            addSession(Session(0, 1, "12345"))
-            addSession(Session(1, 2, "23456"))
-            addSession(Session(2, 3, "34567"))
-            addSession(Session(3, 4, "45678"))
+        suspend fun createNewSession() {
+            val formatter = SimpleDateFormat("dd.yyyy.MM HH:mm:ss", Locale.getDefault())
+            formatter.timeZone = TimeZone.getTimeZone("UTC")
+            val date = formatter.format(Date())
+            var session = Session(0, 0, date)
+
+            dao.insertAll(session)
+
+            val currentSession = dao.getLastSession()
+            LogsDataSource.setCurrentSession(currentSession)
         }
     }
 }

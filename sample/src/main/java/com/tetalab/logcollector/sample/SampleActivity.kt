@@ -7,10 +7,13 @@ import android.os.Looper
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.tetalab.logcollector.AppLogLibrary
-import com.tetalab.logcollector.LogsActivity
-import com.tetalab.logcollector.data.room.LogDatabase
+import com.tetalab.logcollector.coroutine.AppCoroutineScope
+import com.tetalab.logcollector.ui.LogsActivity
 import com.tetalab.logcollector.data.source.LogsDataSource
 import com.tetalab.logcollector.ui.dialog.LogDialogFragment
+import com.tetalab.logcollector.ui.history.HistoryViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class SampleActivity : AppCompatActivity() {
 
@@ -19,13 +22,17 @@ class SampleActivity : AppCompatActivity() {
     private lateinit var handler: Handler
 
     private var messageNumber = 1
+    private lateinit var viewModel: SampleViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sample)
+        AppLogLibrary.init(this)
+
+        val scope = AppCoroutineScope()
+        viewModel = SampleViewModel(application, scope)
 
         handler = Handler(Looper.myLooper()!!)
-        AppLogLibrary.init(this)
         initView()
         initListener()
     }
@@ -61,19 +68,19 @@ class SampleActivity : AppCompatActivity() {
 
     private fun sendTestMessages() {
         handler.postDelayed({
-            LogsDataSource.w("testClass", "testMessage", "Message")
+            viewModel.wLog("testClass", "testMessage", "Message")
         }, 1000)
         handler.postDelayed({
-            LogsDataSource.i("testClass2", "testMessage2", "Message2")
+            viewModel.iLog("testClass2", "testMessage2", "Message2")
         }, 2000)
         handler.postDelayed({
-            LogsDataSource.e("testClass3", "testMessage3", "Message3")
+            viewModel.eLog("testClass3", "testMessage3", "Message3")
         }, 3000)
         handler.postDelayed({
-            LogsDataSource.inMessage("testClass4", "testMessage4", "Message4")
+            viewModel.inMessageLog("testClass4", "testMessage4", "Message4")
         }, 4000)
         handler.postDelayed({
-            LogsDataSource.outMessage("testClass5", "testMessage5", "Message5")
+            viewModel.outMessageLog("testClass5", "testMessage5", "Message5")
         }, 5000)
 
         scheduleDataUpdates()
@@ -85,11 +92,11 @@ class SampleActivity : AppCompatActivity() {
     }
 
     private val sendMessagesRunnable = Runnable {
-        LogsDataSource.w("Message$messageNumber")
-        LogsDataSource.i("Message$messageNumber")
-        LogsDataSource.e("Message$messageNumber")
-        LogsDataSource.inMessage("Message$messageNumber")
-        LogsDataSource.outMessage("Message$messageNumber")
+        viewModel.wLog("Message$messageNumber")
+        viewModel.iLog("Message$messageNumber")
+        viewModel.eLog("Message$messageNumber")
+        viewModel.inMessageLog("Message$messageNumber")
+        viewModel.outMessageLog("Message$messageNumber")
         messageNumber++
         scheduleDataUpdates()
     }

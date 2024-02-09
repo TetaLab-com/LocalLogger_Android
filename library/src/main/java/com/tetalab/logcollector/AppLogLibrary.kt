@@ -9,7 +9,6 @@ class AppLogLibrary {
     companion object {
         fun init(context: Context) {
             LogDatabase.buildDatabase(context)
-
             LogsDataSource.init()
             SessionDataSource.init()
         }

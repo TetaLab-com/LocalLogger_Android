@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class AppLog(
     @PrimaryKey(autoGenerate = true) val uid: Int = 0,
-    @ColumnInfo(name = "session_id") val sessionId: Int,
+    @ColumnInfo(name = "session_id") var sessionId: Int,
     @ColumnInfo(name = "date_time") val dateTime: String,
     @ColumnInfo(name = "message") val message: String,
     @ColumnInfo(name = "level") val level: Level = Level.WARNING,

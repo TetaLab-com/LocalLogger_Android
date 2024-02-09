@@ -13,6 +13,9 @@ interface SessionDAO {
     @Query("SELECT * FROM Session")
     fun getAll(): List<Session>
 
+    @Query("SELECT * FROM Session ORDER BY date_time DESC LIMIT 1")
+    fun getLastSession() : Session
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg sessions: Session)
 
@@ -21,4 +24,5 @@ interface SessionDAO {
 
     @Delete
     fun delete(session: Session)
+
 }

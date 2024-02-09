@@ -1,4 +1,4 @@
-package com.tetalab.logcollector
+package com.tetalab.logcollector.ui
 
 import android.os.Bundle
 import android.os.Handler
@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
+import com.tetalab.logcollector.R
 import com.tetalab.logcollector.ui.about.AboutFragment
 import com.tetalab.logcollector.ui.history.HistoryFragment
 import com.tetalab.logcollector.ui.log.LogFragment
