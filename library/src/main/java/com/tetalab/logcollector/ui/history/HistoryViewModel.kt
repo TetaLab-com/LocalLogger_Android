@@ -1,6 +1,7 @@
 package com.tetalab.logcollector.ui.history
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.tetalab.logcollector.coroutine.ioJob
 import com.tetalab.logcollector.data.model.Session
@@ -13,13 +14,14 @@ class HistoryViewModel constructor(
     coroutineScope: CoroutineScope
 ) : BaseViewModel(application, coroutineScope) {
 
-    val sessions = MutableLiveData<List<Session>>()
+    private val _sessions = MutableLiveData<List<Session>>()
+    val sessions: LiveData<List<Session>> = _sessions
 
     fun getSessions() = ioJob {
         val database = LogDatabase.getInstance()
         val dao = database.sessionDao()
 
         val sessionList = dao.getAll()
-        sessions.postValue(sessionList)
+        _sessions.postValue(sessionList)
     }
 }
