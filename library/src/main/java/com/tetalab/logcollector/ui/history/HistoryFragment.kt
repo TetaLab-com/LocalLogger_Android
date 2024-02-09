@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tetalab.logcollector.R
 import com.tetalab.logcollector.coroutine.AppCoroutineScope
-import com.tetalab.logcollector.ui.adapter.HistoryAdapter
 
 class HistoryFragment : Fragment() {
 

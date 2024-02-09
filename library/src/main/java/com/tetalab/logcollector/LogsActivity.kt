@@ -8,10 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
-import com.tetalab.logcollector.data.room.LogDatabase
-import com.tetalab.logcollector.ui.AboutFragment
+import com.tetalab.logcollector.ui.about.AboutFragment
 import com.tetalab.logcollector.ui.history.HistoryFragment
-import com.tetalab.logcollector.ui.LogFragment
+import com.tetalab.logcollector.ui.log.LogFragment
 
 
 class LogsActivity : AppCompatActivity() {

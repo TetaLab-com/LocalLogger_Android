@@ -1,4 +1,4 @@
-package com.tetalab.logcollector.ui
+package com.tetalab.logcollector.ui.log
 
 import android.content.Context
 import android.content.Intent
@@ -13,7 +13,6 @@ import com.tetalab.logcollector.R
 import com.tetalab.logcollector.data.model.Level
 import com.tetalab.logcollector.data.model.AppLog
 import com.tetalab.logcollector.data.source.LogsDataSource
-import com.tetalab.logcollector.ui.adapter.LogsAdapter
 
 class LogsViewController(private val root: View, private val context: Context) {
 

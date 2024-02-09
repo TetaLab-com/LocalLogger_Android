@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import com.tetalab.logcollector.ui.LogFragment
+import com.tetalab.logcollector.ui.log.LogFragment
 
 /**
  * Todo generalize Activity and Fragment logic

@@ -8,6 +8,10 @@ class SessionDataSource {
     companion object {
         private val sessions = Collections.synchronizedList(mutableListOf<Session>())
 
+        fun init() {
+
+        }
+
         private fun addSession(session: Session) {
             sessions.add(session)
         }

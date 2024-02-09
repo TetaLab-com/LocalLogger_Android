@@ -17,6 +17,10 @@ class LogsDataSource {
         private val logs = Collections.synchronizedList(mutableListOf<AppLog>())
         private var formatter: SimpleDateFormat = SimpleDateFormat("HH:mm:ssSSSS")
 
+        fun init() {
+
+        }
+
         //todo save logs in DB here
         private fun addLog(log: AppLog) {
             logs.add(log)

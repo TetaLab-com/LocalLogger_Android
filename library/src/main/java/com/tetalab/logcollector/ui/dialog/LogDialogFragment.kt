@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.tetalab.logcollector.R
 import com.tetalab.logcollector.data.source.LogsDataSource
-import com.tetalab.logcollector.ui.LogsViewController
+import com.tetalab.logcollector.ui.log.LogsViewController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch

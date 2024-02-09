@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.tetalab.logcollector.AppLogLibrary
 import com.tetalab.logcollector.LogsActivity
 import com.tetalab.logcollector.data.room.LogDatabase
 import com.tetalab.logcollector.data.source.LogsDataSource
@@ -24,7 +25,7 @@ class SampleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sample)
 
         handler = Handler(Looper.myLooper()!!)
-        LogDatabase.buildDatabase(this)
+        AppLogLibrary.init(this)
         initView()
         initListener()
     }

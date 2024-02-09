@@ -1,4 +1,4 @@
-package com.tetalab.logcollector.ui.adapter
+package com.tetalab.logcollector.ui.log
 
 import android.view.LayoutInflater
 
