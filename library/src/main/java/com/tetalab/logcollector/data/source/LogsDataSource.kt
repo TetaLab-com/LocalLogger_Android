@@ -17,6 +17,7 @@ class LogsDataSource {
         private val logs = Collections.synchronizedList(mutableListOf<AppLog>())
         private var formatter: SimpleDateFormat = SimpleDateFormat("HH:mm:ssSSSS")
 
+        //todo save logs in DB here
         private fun addLog(log: AppLog) {
             logs.add(log)
             android.util.Log.d("AppLog", "[${log.className}] [${log.methodName}] ${log.message}")

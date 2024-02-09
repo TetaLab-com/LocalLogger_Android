@@ -17,10 +17,10 @@ class SessionDataSource {
         }
 
         init {
-            addSession(Session("12345"))
-            addSession(Session("23456"))
-            addSession(Session("34567"))
-            addSession(Session("45678"))
+            addSession(Session(0, 1, "12345"))
+            addSession(Session(1, 2, "23456"))
+            addSession(Session(2, 3, "34567"))
+            addSession(Session(3, 4, "45678"))
         }
     }
 }

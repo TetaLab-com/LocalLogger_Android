@@ -1,4 +1,4 @@
-package com.tetalab.logcollector.ui
+package com.tetalab.logcollector.ui.history
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tetalab.logcollector.R
-import com.tetalab.logcollector.data.source.SessionDataSource
+import com.tetalab.logcollector.coroutine.AppCoroutineScope
 import com.tetalab.logcollector.ui.adapter.HistoryAdapter
 
 class HistoryFragment : Fragment() {
@@ -17,6 +17,7 @@ class HistoryFragment : Fragment() {
     private lateinit var historyRecyclerView: RecyclerView
 
     private lateinit var adapter: HistoryAdapter
+    private lateinit var viewModel: HistoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,8 +30,14 @@ class HistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val scope = AppCoroutineScope()
+        viewModel = HistoryViewModel(requireActivity().application, scope)
+
+        initObserver()
         initView()
         initListener()
+
+        viewModel.getSessions()
     }
 
     private fun initView() {
@@ -38,10 +45,21 @@ class HistoryFragment : Fragment() {
 
         //init list of Logs
         historyRecyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = HistoryAdapter(SessionDataSource.getSessions().toMutableList())
+        adapter = HistoryAdapter(mutableListOf())
         historyRecyclerView.adapter = adapter
     }
 
     private fun initListener() {
+
+    }
+
+    private fun initObserver() {
+        with(viewModel) {
+            sessions.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    adapter.updateData(it)
+                }
+            }
+        }
     }
 }
