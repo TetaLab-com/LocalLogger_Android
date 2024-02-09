@@ -16,6 +16,17 @@
         android:paddingHorizontal="12dp"
         android:background="@color/title_background">
 
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_back"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/title_background"
+            app:layout_constraintTop_toTopOf="@+id/title" />
+
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
@@ -26,7 +37,7 @@
             android:textColor="@color/title_text"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toEndOf="@+id/backBtn"/>
 
         <Spinner
             android:id="@+id/filterLevel"

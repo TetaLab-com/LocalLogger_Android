@@ -16,6 +16,7 @@ class SessionDataSource {
         private val sessions = Collections.synchronizedList(mutableListOf<Session>())
 
         private lateinit var dao: SessionDAO
+        private var activeSession: Session? = null
 
         fun init() {
             dao = LogDatabase.getInstance().sessionDao()
@@ -38,8 +39,12 @@ class SessionDataSource {
 
             dao.insertAll(session)
 
-            val currentSession = dao.getLastSession()
-            LogsDataSource.setCurrentSession(currentSession)
+            activeSession = dao.getLastSession()
+            LogsDataSource.setCurrentSession(activeSession!!)
+        }
+
+        fun getActiveSession(): Session? {
+            return activeSession
         }
     }
 }

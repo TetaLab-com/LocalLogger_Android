@@ -13,8 +13,8 @@ interface AppLogDAO {
     @Query("SELECT * FROM AppLog")
     fun getAll(): List<AppLog>
 
-    @Query("SELECT * FROM AppLog WHERE session_id IN (:sessionIds)")
-    fun loadAllBySessionIds(sessionIds: IntArray): List<AppLog>
+    @Query("SELECT * FROM AppLog WHERE session_id = (:sessionId)")
+    fun loadAllBySessionId(sessionId: Int): List<AppLog>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg logs: AppLog)

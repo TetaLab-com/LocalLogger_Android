@@ -8,7 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tetalab.logcollector.R
 import com.tetalab.logcollector.data.model.Session
 
-class HistoryAdapter(private val localDataSet: MutableList<Session>) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+class HistoryAdapter(private val localDataSet: MutableList<Session>, val callback: IHistoryAdapter) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+
+    interface IHistoryAdapter {
+        fun onSessionSelected(session: Session)
+    }
 
     class ViewHolder(var root: View) : RecyclerView.ViewHolder(root) {
         val dateView: TextView = root.findViewById<View>(R.id.dateView) as TextView
@@ -23,14 +27,18 @@ class HistoryAdapter(private val localDataSet: MutableList<Session>) : RecyclerV
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        var log = localDataSet[position]
-        viewHolder.dateView.text = log.dateTime
-        viewHolder.textView.text = log.dateTime
+        var session = localDataSet[position]
+        viewHolder.dateView.text = session.dateTime
+        viewHolder.textView.text = session.dateTime
 
         if (position % 2 == 0) {
             viewHolder.root.setBackgroundColor(viewHolder.root.resources.getColor(R.color.row_pair))
         } else {
             viewHolder.root.setBackgroundColor(viewHolder.root.resources.getColor(R.color.row_odd))
+        }
+
+        viewHolder.root.setOnClickListener {
+            callback.onSessionSelected(session)
         }
     }
 

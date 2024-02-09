@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tetalab.logcollector.R
 import com.tetalab.logcollector.coroutine.AppCoroutineScope
+import com.tetalab.logcollector.data.model.Session
+import com.tetalab.logcollector.ui.LogsActivity
 
 class HistoryFragment : Fragment() {
 
@@ -44,7 +46,12 @@ class HistoryFragment : Fragment() {
 
         //init list of Logs
         historyRecyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = HistoryAdapter(mutableListOf())
+        adapter = HistoryAdapter(mutableListOf(), object : HistoryAdapter.IHistoryAdapter {
+
+            override fun onSessionSelected(session: Session) {
+                (requireActivity() as LogsActivity).openHistoryLogs(session.uid)
+            }
+        })
         historyRecyclerView.adapter = adapter
     }
 

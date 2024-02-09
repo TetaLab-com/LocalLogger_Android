@@ -141,5 +141,9 @@ class LogsDataSource {
         fun setCurrentSession(session: Session) {
             this.session = session
         }
+
+        suspend fun getHistoryLogs(sessionId: Int): List<AppLog> {
+            return dao.loadAllBySessionId(sessionId)
+        }
     }
 }

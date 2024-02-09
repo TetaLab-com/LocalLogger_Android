@@ -47,6 +47,24 @@ class LogsActivity : AppCompatActivity() {
             .commit()
     }
 
+    fun openHistoryLogs(uid: Int) {
+        val fragment = LogFragment.newInstance(uid)
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.fragmentContainer, fragment)
+            .addToBackStack("Logs")
+            .commit()
+        bottomNavView.selectedItemId = 0
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStackImmediate()
+        }else {
+            super.onBackPressed()
+        }
+    }
+
     private val navListener =
         NavigationBarView.OnItemSelectedListener { item: MenuItem ->
             // By using switch we can easily get

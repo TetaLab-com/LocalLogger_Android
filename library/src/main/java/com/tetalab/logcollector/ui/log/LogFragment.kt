@@ -5,22 +5,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.tetalab.logcollector.R
 import com.tetalab.logcollector.coroutine.AppCoroutineScope
-import com.tetalab.logcollector.data.source.LogsDataSource
-import com.tetalab.logcollector.ui.history.HistoryViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class LogFragment : Fragment() {
 
     private lateinit var root: View
 
     private lateinit var logsViewController: LogsViewController
+    private lateinit var backBtn: View
+    private lateinit var title: TextView
     private var sessionId: Int = -1
 
     private lateinit var viewModel: LogViewModel
@@ -29,14 +25,14 @@ class LogFragment : Fragment() {
         val TAG: String = LogFragment::class.java.name
 
         const val KEY_SESSION_ID = "SESSION_ID"
-    }
 
-    fun newInstance(sessionId: Int): LogFragment {
-        val f = LogFragment()
-        val args = Bundle()
-        args.putInt(KEY_SESSION_ID, sessionId)
-        f.arguments = args
-        return f
+        fun newInstance(sessionId: Int): LogFragment {
+            val f = LogFragment()
+            val args = Bundle()
+            args.putInt(KEY_SESSION_ID, sessionId)
+            f.arguments = args
+            return f
+        }
     }
 
     override fun onCreateView(
@@ -57,11 +53,25 @@ class LogFragment : Fragment() {
         logsViewController.initView()
         logsViewController.initListener()
 
-        if(arguments == null) {
+        initView()
+        initListener()
+
+        if (arguments == null) {
             //read into about current Session
         } else {
             sessionId = requireArguments().getInt(KEY_SESSION_ID)
+            viewModel.setSession(sessionId)
+        }
+    }
 
+    private fun initView() {
+        backBtn = root.findViewById(R.id.backBtn)
+        title = root.findViewById(R.id.title)
+    }
+
+    private fun initListener() {
+        backBtn.setOnClickListener {
+            requireActivity().onBackPressed()
         }
     }
 
@@ -70,6 +80,12 @@ class LogFragment : Fragment() {
             logs.observe(viewLifecycleOwner) {
                 if (it != null) {
                     logsViewController.updateData(it)
+                }
+            }
+            session.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    backBtn.visibility = View.VISIBLE
+                    title.text = it.dateTime
                 }
             }
         }
