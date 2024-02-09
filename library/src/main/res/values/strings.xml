@@ -2,4 +2,9 @@
     <string name="app_name">LogCollector</string>
     <string name="logTitle">Application Logs</string>
     <string name="logHistoryTitle">Logs History</string>
+    <string name="infoTitle">About library</string>
+    <string name="info_title1">Data storage</string>
+    <string name="info_message1">Thank you for choosing our Logger Library! We want to inform you that library collect developer logs and store them locally. You are able to inform developers about application issues and provide important logs to understands what’s happened.</string>
+    <string name="info_title2">Your Security — Our Priority</string>
+    <string name="info_message2">We take all necessary measures to ensure the security of the collected data. These logs stay only on your device and are not sent anywhere. They are used solely to improve the product and ensure the app\'s quality performance priority.</string>
 </resources>

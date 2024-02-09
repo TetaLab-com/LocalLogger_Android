@@ -21,7 +21,7 @@ class HistoryAdapter(private val localDataSet: MutableList<Session>, val callbac
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.text_row_item, viewGroup, false)
+            .inflate(R.layout.history_row_item, viewGroup, false)
         android.util.Log.d("HistoryAdapter", "onCreateViewHolder")
         return ViewHolder(view)
     }
@@ -29,7 +29,7 @@ class HistoryAdapter(private val localDataSet: MutableList<Session>, val callbac
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         var session = localDataSet[position]
         viewHolder.dateView.text = session.dateTime
-        viewHolder.textView.text = session.dateTime
+        viewHolder.textView.text = session.logsCount.toString()
 
         if (position % 2 == 0) {
             viewHolder.root.setBackgroundColor(viewHolder.root.resources.getColor(R.color.row_pair))

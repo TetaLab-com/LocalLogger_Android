@@ -15,7 +15,7 @@ class AboutFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        root = inflater.inflate(R.layout.fragment_just_logs, container, false)
+        root = inflater.inflate(R.layout.fragment_about, container, false)
         return root
     }
 
