@@ -16,42 +16,42 @@ open class BaseLogViewModel constructor(
     }
 
     fun wLog(message: String) = ioJob {
-        LogsDataSource.w("", "", "Message2")
+        LogsDataSource.w(message)
     }
 
     fun wLog(className: String, method: String, message: String) = ioJob {
-        LogsDataSource.w("testClass2", "testMessage2", "Message2")
+        LogsDataSource.w(className, method, message)
     }
 
     fun iLog(message: String) = ioJob {
-        LogsDataSource.i("", "", "Message2")
+        LogsDataSource.i(message)
     }
 
     fun iLog(className: String, method: String, message: String) = ioJob {
-        LogsDataSource.i("testClass2", "testMessage2", "Message2")
+        LogsDataSource.i(className, method, message)
     }
 
     fun eLog(message: String) = ioJob {
-        LogsDataSource.e("", "", "Message2")
+        LogsDataSource.e(message)
     }
 
     fun eLog(className: String, method: String, message: String) = ioJob {
-        LogsDataSource.e("testClass2", "testMessage2", "Message2")
+        LogsDataSource.e(className, method, message)
     }
 
     fun inMessageLog(message: String) = ioJob {
-        LogsDataSource.inMessage("", "", "Message2")
+        LogsDataSource.inMessage(message)
     }
 
     fun inMessageLog(className: String, method: String, message: String) = ioJob {
-        LogsDataSource.inMessage("testClass2", "testMessage2", "Message2")
+        LogsDataSource.inMessage(className, method, message)
     }
 
     fun outMessageLog(message: String) = ioJob {
-        LogsDataSource.outMessage("", "", "Message2")
+        LogsDataSource.outMessage(message)
     }
 
     fun outMessageLog(className: String, method: String, message: String) = ioJob {
-        LogsDataSource.outMessage("testClass2", "testMessage2", "Message2")
+        LogsDataSource.outMessage(className, method, message)
     }
 }

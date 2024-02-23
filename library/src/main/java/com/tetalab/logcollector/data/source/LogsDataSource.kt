@@ -38,12 +38,20 @@ class LogsDataSource {
             notifyListUpdates()
         }
 
+        private fun getMethodName() : String {
+            return Thread.currentThread().stackTrace[4].methodName
+        }
+
+        private fun getClassName() : String {
+            return Thread.currentThread().stackTrace[4].className
+        }
+
         suspend fun w(className: String, methodName: String, message: String) {
             addLog(AppLog(getTimeString(), message, Level.WARNING, className, methodName))
         }
 
         suspend fun w(message: String) {
-            w("", "", message)
+            w(getClassName(), getMethodName(), message)
         }
 
         suspend fun i(className: String, methodName: String, message: String) {
@@ -51,7 +59,7 @@ class LogsDataSource {
         }
 
         suspend fun i(message: String) {
-            i("", "", message)
+            i(getClassName(), getMethodName(), message)
         }
 
         suspend fun e(className: String, methodName: String, message: String) {
@@ -59,7 +67,7 @@ class LogsDataSource {
         }
 
         suspend fun e(message: String) {
-            e("", "", message)
+            e(getClassName(), getMethodName(), message)
         }
 
         suspend fun inMessage(className: String, methodName: String, message: String) {
@@ -67,7 +75,7 @@ class LogsDataSource {
         }
 
         suspend fun inMessage(message: String) {
-            inMessage("", "", message)
+            inMessage(getClassName(), getMethodName(), message)
         }
 
         suspend fun outMessage(className: String, methodName: String, message: String) {
@@ -75,7 +83,7 @@ class LogsDataSource {
         }
 
         suspend fun outMessage(message: String) {
-            outMessage("", "", message)
+            outMessage(getClassName(), getMethodName(), message)
         }
 
         private fun getTimeString(): String {
@@ -102,11 +110,13 @@ class LogsDataSource {
 
 
         fun getFilteredLogs(): List<AppLog> {
+            val logsCopy = mutableListOf<AppLog>()
+            logsCopy.addAll(logs)
             val filteredLogs = if (searchQuery.isNotEmpty())
-                logs.filter { it.getUserMessage().toLowerCase().contains(searchQuery.toLowerCase()) }
+                logsCopy.filter { it.getUserMessage().toLowerCase().contains(searchQuery.toLowerCase()) }
                     .filter { it.level.getLevelPrefix().contains(filterLevel) }
             else
-                logs.filter { it.level.getLevelPrefix().contains(filterLevel) }
+                logsCopy.filter { it.level.getLevelPrefix().contains(filterLevel) }
             val from = Math.max(filteredLogs.size - BUFFER_LENGTH, 0)
             val to = filteredLogs.size
 
